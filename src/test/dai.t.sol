@@ -133,6 +133,17 @@ contract DaiTest is DSTest {
         token.transfer(address(0), 10);
     }
 
+    function testTransferLinearity(address them, uint amount) public {
+      uint preMe = token.balanceOf(address(this));
+      uint preThem = token.balanceOf(address(them));
+      if (preMe >= amount) {
+         token.transfer(address(them), amount);
+      }
+      uint postMe   = token.balanceOf(address(this));
+      uint postThem = token.balanceOf(address(them));
+      assertEq(preMe + preThem, postMe + postThem);
+    }
+
     function testAllowanceStartsAtZero() public logs_gas {
         assertEq(token.allowance(user1, user2), 0);
     }
