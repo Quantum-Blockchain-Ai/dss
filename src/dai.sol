@@ -78,7 +78,7 @@ contract Dai is LibNote {
             allowance[src][msg.sender] = sub(allowance[src][msg.sender], wad);
         }
         balanceOf[src] = sub(balanceOf[src], wad);
-        balanceOf[dst] = add(balanceOf[dst], wad);
+        balanceOf[dst] = balanceOf[dst] + wad;
         emit Transfer(src, dst, wad);
         return true;
     }
