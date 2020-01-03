@@ -18,6 +18,7 @@
 pragma solidity 0.5.12;
 
 import "ds-test/test.sol";
+import "ds-math/math.sol";
 
 import "../dai.sol";
 
@@ -86,7 +87,7 @@ contract Hevm {
     function warp(uint256) public;
 }
 
-contract DaiTest is DSTest {
+contract DaiTest is DSTest, DSMath {
     uint constant initialBalanceThis = 1000;
     uint constant initialBalanceCal = 100;
 
@@ -141,7 +142,7 @@ contract DaiTest is DSTest {
       }
       uint postMe   = token.balanceOf(address(this));
       uint postThem = token.balanceOf(address(them));
-      assertEq(preMe + preThem, postMe + postThem);
+      assertEq(add(preMe, preThem), add(postMe, postThem));
     }
 
     function testAllowanceStartsAtZero() public logs_gas {
