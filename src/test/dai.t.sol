@@ -134,9 +134,10 @@ contract DaiTest is DSTest, DSMath {
         token.transfer(address(0), 10);
     }
 
-    function testTransferLinearity(address them, uint amount) public {
-      uint preMe = token.balanceOf(address(this));
-      uint preThem = token.balanceOf(address(them));
+    function testTransferLinearity(address them, uint256 preMe, uint256 preThem, uint amount) public {
+      token.burn(address(this), initialBalanceThis);
+      token.mint(address(this), preMe);
+      token.mint(them, preThem);
       if (preMe >= amount) {
          token.transfer(address(them), amount);
       }
